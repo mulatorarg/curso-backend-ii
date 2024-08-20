@@ -1,0 +1,31 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+line_width = 900
+
+[*.php]
+indent_style = space
+indent_size = 4
+line_width = 900
+trim_trailing_whitespace = true
+
+[*.blade.php]
+indent_style = space
+indent_size = 2
+line_width = 900
+trim_trailing_whitespace = true
+
+[*.md]
+line_width = 900
+trim_trailing_whitespace = true
+
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+line_width = 900
