@@ -1,8 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import UsuarioModel from "../models/usuario.model.js";
-import { createHash, isValidPassword } from "../util/util.js";
-import passport from "passport";
+import { passportCall, createHash, isValidPassword } from "../util/util.js";
 import jwt from "jsonwebtoken";
 
 // Ruta que procesa el Registro de un Usuario
@@ -62,7 +61,7 @@ router.post("/login", async (req, res) => {
 
     //Genero la cookie
     res.cookie("coderShopToken", token, {
-      maxAge: 3600000,
+      maxAge: 60 * 60 * 1000,
       httpOnly: true
     });
 
@@ -73,16 +72,16 @@ router.post("/login", async (req, res) => {
 });
 
 // Ruta para controlar si está logueado el usuario
-router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.get("/current", passportCall("jwt"), (req, res) => {
   if (req.user) {
     res.render("home", { usuario: req.user.usuario });
   } else {
-    res.status(401).send("Acceso denegaso. No haz iniciado sesión.");
+    res.status(401).send("Acceso denegado. No haz iniciado sesión.");
   }
 });
 
 // Ruta exclusiva para admins
-router.get("/admin", passport.authenticate("jwt", { session: false }), (req, res) => {
+router.get("/admin", passportCall("jwt"), (req, res) => {
   if (req.user.rol !== "admin") {
     return res.status(403).send("Acceso denegado. No posees privilegios necesatios.");
   }

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import passport from "passport";
+import { passportCall, authorization } from "../util/util.js";
 
 const router = Router();
 
-router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.get("/", passportCall("jwt"), authorization("admin"), async (req, res) => {
   try {
     res.render("admin-index");
   } catch (error) {
@@ -11,7 +11,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
   }
 });
 
-router.get("/productos", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.get("/productos", passportCall("jwt"), authorization("admin"), async (req, res) => {
   try {
     res.render("admin-productos");
   } catch (error) {
@@ -19,7 +19,7 @@ router.get("/productos", passport.authenticate("jwt", { session: false }), async
   }
 });
 
-router.get("/productos/abm", passport.authenticate("jwt", { session: false }), async (req, res) => {
+router.get("/productos/abm", passportCall("jwt"), authorization("admin"), async (req, res) => {
   res.render("admin-productos-abm");
 });
 

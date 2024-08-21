@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
+import { productoSchema } from "./producto.model.js";
 
-const usuarioSchema = new mongoose.Schema({
-  usuario: String,
+export const usuarioSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    lowercase: true,
+    unique: true
+  },
   password: String,
+  first_name: String,
+  last_name: String,
+  age: Number,
+  cart: productoSchema,
   rol: {
     type: String,
     enum: ["admin", "user"],
