@@ -1,18 +1,21 @@
-# Clases
+# Proyecto
 
 ## Comandos iniciales
 
-Iniciamos el proyecto (previa creación de la carpeta de trabajo).
+Descargamos el proyecto.
 
 ```sh
-mkdir clase0
-cd clase0
-npm init
+git clone https://github.com/mulatorarg/curso-backend-ii.git
 ```
 
-Instalamos los paquetes necesarios. Primero, ```nodemon``` que nos ayudará durante el desarrollo, luego el servidor ```express``` con su correspondiente motor de planitillas ```express-handlebars```, y por supuesto, el ORM ```moongose``` para nuestro motor de base de datos no relacional MongoDB.
+Ingresamos a la carpera recientemente descargada y luego instalamos los paquetes requeridos.
 
 ```sh
-npm i -D nodemon
-npm i express express-handlebars mongoose
+cd curso-backend-ii
+npm i
+```
+
+Ejecutamos
+```sh
+npm run dev
 ```
