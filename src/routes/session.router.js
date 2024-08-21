@@ -6,18 +6,21 @@ import jwt from "jsonwebtoken";
 
 // Ruta que procesa el Registro de un Usuario
 router.post("/register", async (req, res) => {
-  const { usuario, password } = req.body;
+  const { email, first_name, last_name, password, age } = req.body;
 
   try {
     //Verifico si ya existe el usuario
-    const existeUsuario = await UsuarioModel.findOne({ usuario });
+    const existeUsuario = await UsuarioModel.findOne({ email });
     if (existeUsuario) {
       return res.status(400).send("El usuario ya existe");
     }
 
     //Creo el nuevo
     const nuevoUsuario = new UsuarioModel({
-      usuario,
+      email,
+      first_name,
+      last_name,
+      age,
       password: createHash(password)
     });
 
