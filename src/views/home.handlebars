@@ -1,5 +1,7 @@
-<h1>Bienvenido, {{usuario}} !! </h1>
+<h1>Hola, ¡{{usuario.first_name}}! </h1>
+
+<p>Pronto verás tu Perfil y tus últimas compras...</p>
 
 <form action="/api/sessions/logout" method="POST">
-  <button type="submit"> Logout </button>
+  <button class="btn btn-success btn-sm" type="submit">Cerrar Sesión</button>
 </form>

@@ -38,5 +38,15 @@
     "destacado": true,
     "activo": true,
     "imagen": "prod4.jpg"
+  },
+  {
+    "codigo": "2513576331454",
+    "nombre": "DETERGENTE MAGISTRAL X 500ML",
+    "descripcion": "Botella x 500ml",
+    "precio": 1800,
+    "categoria": "LIMPIEZA",
+    "destacado": true,
+    "activo": true,
+    "imagen": "prod5.jpg"
   }
 ]

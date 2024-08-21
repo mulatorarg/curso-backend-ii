@@ -60,7 +60,7 @@ router.post("/login", async (req, res) => {
     }
 
     //Genero el token de JWT
-    const token = jwt.sign({ usuario: usuarioEncontrado.usuario, rol: usuarioEncontrado.rol }, "coderShopSecreto", { expiresIn: "1h" });
+    const token = jwt.sign({ first_name: usuarioEncontrado.first_name, last_name: usuarioEncontrado.last_name, rol: usuarioEncontrado.rol }, "coderShopSecreto", { expiresIn: "1h" });
 
     //Genero la cookie
     res.cookie("coderShopToken", token, {
@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
 // Ruta para controlar si está logueado el usuario
 router.get("/current", passportCall("jwt"), (req, res) => {
   if (req.user) {
-    res.render("home", { usuario: req.user.usuario });
+    res.render("home", { usuario: req.user });
   } else {
     res.status(401).send("Acceso denegado. No haz iniciado sesión.");
   }
@@ -88,7 +88,7 @@ router.get("/admin", passportCall("jwt"), (req, res) => {
   if (req.user.rol !== "admin") {
     return res.status(403).send("Acceso denegado. No posees privilegios necesatios.");
   }
-  res.render("admin");
+  res.render("admin", { usuario: req.user });
 });
 
 // Ruta para cerrar sesión
