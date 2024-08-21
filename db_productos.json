@@ -1,0 +1,42 @@
+[
+  {
+    "codigo": "7123456789012",
+    "nombre": "CERVEZA QUILMES 1L",
+    "descripcion": "Botella de 1L",
+    "precio": 1180,
+    "categoria": "BEBIDAS",
+    "destacado": true,
+    "activo": true,
+    "imagen": "prod1.jpg"
+  },
+  {
+    "codigo": "7112233445566",
+    "nombre": "CERVEZA BRAHMA 1L",
+    "descripcion": "Botella de 1L",
+    "precio": 1200,
+    "categoria": "BEBIDAS",
+    "destacado": false,
+    "activo": true,
+    "imagen": "prod2.jpg"
+  },
+  {
+    "codigo": "6517987103246",
+    "nombre": "PAN FRANCES X KG",
+    "descripcion": "Bolsa x KG",
+    "precio": 960,
+    "categoria": "PANADERIA",
+    "destacado": false,
+    "activo": true,
+    "imagen": "prod3.jpg"
+  },
+  {
+    "codigo": "9510357486201",
+    "nombre": "MORTADELA PIAMONTEZA X KG",
+    "descripcion": "Paquete x KG",
+    "precio": 2100,
+    "categoria": "FIAMBRERIA",
+    "destacado": true,
+    "activo": true,
+    "imagen": "prod4.jpg"
+  }
+]

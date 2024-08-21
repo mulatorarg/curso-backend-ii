@@ -15,7 +15,7 @@ indent_size = 4
 line_width = 900
 trim_trailing_whitespace = true
 
-[*.blade.php]
+[*.handlebars]
 indent_style = space
 indent_size = 2
 line_width = 900
