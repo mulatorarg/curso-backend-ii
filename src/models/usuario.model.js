@@ -1,26 +1,38 @@
 import mongoose from "mongoose";
-import { productoSchema } from "./producto.model.js";
 
 export const usuarioSchema = new mongoose.Schema({
+  first_name: {
+    type: String,
+    required: true
+  },
+  last_name: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
-    lowercase: true,
-    unique: true
+    required: true,
+    unique: true,
+    index: true
   },
-  password: String,
-  first_name: String,
-  last_name: String,
-  age: Number,
-  cart: productoSchema,
-  rol: {
+  cart_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'carts',
+    required: true
+  },
+  password: {
     type: String,
-    enum: ["admin", "user"],
-    default: "user"
+    required: true
   },
-  activo: {
-    type: Boolean,
-    default: true
+  age: {
+    type: Number,
+    required: true
   },
+  role: {
+    type: String,
+    enum: ["admin", "usuario"],
+    default: "usuario"
+  }
 });
 
 const UsuarioModel = mongoose.model("usuarios", usuarioSchema);

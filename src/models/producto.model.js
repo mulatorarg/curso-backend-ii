@@ -6,13 +6,14 @@ export const productoSchema = new mongoose.Schema({
   descripcion: String,
   precio: Number,
   categoria: String,
+  stock: {
+    type: Number,
+    required: true,
+    default: 1
+  },
   destacado: {
     type: Boolean,
     default: false
-  },
-  activo: {
-    type: Boolean,
-    default: true
   },
 });
 
