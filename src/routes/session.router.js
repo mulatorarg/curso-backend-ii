@@ -3,6 +3,7 @@ const router = Router();
 import UsuarioModel from "../models/usuario.model.js";
 import { passportCall, createHash, isValidPassword } from "../util/util.js";
 import jwt from "jsonwebtoken";
+import CartModel from "../models/cart.model.js";
 
 // Ruta que procesa el Registro de un Usuario
 router.post("/register", async (req, res) => {
@@ -14,6 +15,8 @@ router.post("/register", async (req, res) => {
     if (existeUsuario) {
       return res.status(400).send("El usuario ya existe");
     }
+
+    const cart = CartModel
 
     //Creo el nuevo
     const nuevoUsuario = new UsuarioModel({
