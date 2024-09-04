@@ -1,47 +1,128 @@
 [
   {
-    "codigo": "zap1n",
-    "nombre": "ZAPATILLA 1 NEGRA",
-    "precio": 1180,
-    "categoria": "ZAPATILLAS DEPORTIVAS",
+    "nombre": "Zapatilla Puma Ferrari Informal Roja",
+    "precio": 42000,
+    "categoria": "ZAPATILLAS INFORMAL",
     "destacado": true,
     "activo": true,
-    "imagen": "prod1.jpg"
+    "stock": 10,
+    "imagen": "zapatilla-puma-ferrari-informal-roja.jpeg"
   },
   {
-    "codigo": "zap2r",
-    "nombre": "ZAPATILLA 2 ROJA",
-    "precio": 1200,
-    "categoria": "ZAPATILLAS DEPORTIVAS",
-    "destacado": false,
-    "activo": true,
-    "imagen": "prod2.jpg"
-  },
-  {
-    "codigo": "zap2m",
-    "nombre": "ZAPATILLA 2 MARRÓN",
-    "precio": 960,
+    "nombre": "Zapatilla Puma Ferrari Roja",
+    "precio": 36000,
     "categoria": "ZAPATILLAS DEPORTIVAS",
     "destacado": false,
     "activo": true,
-    "imagen": "prod3.jpg"
+    "stock": 13,
+    "imagen": "zapatilla-puma-ferrari-roja.jpeg"
   },
   {
-    "codigo": "zap1m",
-    "nombre": "ZAPATO 1 MARRÓN",
-    "precio": 2100,
-    "categoria": "ZAPATO VESTIR",
-    "destacado": true,
+    "nombre": "Zapatilla Puma Ferrari Rosa",
+    "precio": 32000,
+    "categoria": "ZAPATILLAS DEPORTIVAS",
+    "destacado": false,
     "activo": true,
-    "imagen": "prod4.jpg"
+    "stock": 14,
+    "imagen": "zapatilla-puma-ferrari-rosa.jpeg"
   },
   {
-    "codigo": "zap1n",
-    "nombre": "ZAPATO 1 NEGRO",
-    "precio": 1800,
-    "categoria": "ZAPATO VESTIR",
+    "nombre": "Mochila I-RUN Azul",
+    "precio": 21000,
+    "categoria": "MOCHILAS",
     "destacado": true,
     "activo": true,
-    "imagen": "prod5.jpg"
+    "stock": 12,
+    "imagen": "mochila-irun-azul.jpeg"
+  },
+  {
+    "nombre": "Mochila I-RUN Negra",
+    "precio": 22000,
+    "categoria": "MOCHILAS",
+    "destacado": true,
+    "activo": true,
+    "stock": 4,
+    "imagen": "mochila-irun-negra.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 6905",
+    "precio": 24000,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-6905.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 6933",
+    "precio": 23000,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-6933.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 6977",
+    "precio": 24000,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-6977.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7004",
+    "precio": 23400,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7004.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7031",
+    "precio": 23800,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7031.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7032",
+    "precio": 22650,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7032.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7058",
+    "precio": 24500,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7058.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7075",
+    "precio": 24600,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7075.jpeg"
+  },
+  {
+    "nombre": "Zapatillas I-Run Modelo 7121",
+    "precio": 24100,
+    "categoria": "ZAPATILLAS RUNNING",
+    "destacado": true,
+    "activo": true,
+    "stock": 6,
+    "imagen": "zapatilla-irun-7121.jpeg"
   }
 ]

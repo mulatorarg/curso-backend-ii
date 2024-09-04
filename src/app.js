@@ -7,7 +7,7 @@ import adminRouter from "./routes/admin.router.js";
 import sessionRouter from "./routes/session.router.js";
 import shopRouter from "./routes/shop.router.js";
 
-import "./database.js";
+import "./config/database.js";
 
 const app = express();
 const PUERTO = 8080;
