@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const cartSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   fecha: { type: Date, default: Date.now },
   productos: [
     {

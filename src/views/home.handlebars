@@ -1,6 +1,12 @@
-<h1>Hola, ¡{{usuario.first_name}}! </h1>
+<h1>Hola, {{user.usuario}}.</h1>
 
-<p>Pronto verás tu Perfil y tus últimas compras...</p>
+<div class="container mt-5 mb-5">
+  <h4>Datos de usuario:</h4>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>📧 Email:</b> <span id="user-email">{{user.email}}</span></li>
+    <li class="list-group-item"><b>🏷️ Rol:</b> <span id="user-role">{{user.role}}</span></li>
+  </ul>
+</div>
 
 <form action="/api/sessions/logout" method="POST">
   <button class="btn btn-success btn-sm" type="submit">Cerrar Sesión</button>

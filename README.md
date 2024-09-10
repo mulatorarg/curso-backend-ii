@@ -19,3 +19,6 @@ Ejecutamos
 ```sh
 npm run dev
 ```
+
+## Entrega Final
+Vence el sábado 14/SEPT/2024 a las 23:59HS

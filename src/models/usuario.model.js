@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const usuarioSchema = new mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({
   first_name: {
     type: String,
     required: true
@@ -15,11 +15,6 @@ export const usuarioSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
-  cart_id: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'carts',
-    required: true
-  },
   password: {
     type: String,
     required: true
@@ -28,10 +23,14 @@ export const usuarioSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  cart_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'carts',
+  },
   role: {
     type: String,
-    enum: ["admin", "usuario"],
-    default: "usuario"
+    enum: ["admin", "user"],
+    default: "user"
   }
 });
 

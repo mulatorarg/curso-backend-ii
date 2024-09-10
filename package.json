@@ -4,7 +4,7 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch src/app.js",
+    "start": "nodemon src/app.js",
     "dev": "node --watch src/app.js"
   },
   "keywords": [],
@@ -18,7 +18,12 @@
     "express-handlebars": "^8.0.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.3",
+    "mongoose-paginate-v2": "^1.8.3",
+    "nodemailer": "^6.9.15",
+    "nodemon": "^3.1.4",
     "passport": "^0.7.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "socket.io": "^4.7.5",
+    "twilio": "^5.3.0"
   }
 }
