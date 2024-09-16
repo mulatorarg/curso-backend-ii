@@ -3,34 +3,27 @@ import ProductDao from "../dao/product.dao.js";
 class ProductService {
 
   getProductsQuery = async (limit, page, sort, query) => {
-    const result = await ProductDao.getProductsQuery(limit, page, sort, query);
-    return result
+    return await ProductDao.getProductsQuery(limit, page, sort, query);
   }
 
   getProducts = async () => {
-    const result = await ProductDao.getProducts();
-    return result
+    return await ProductDao.getProducts();
   }
 
   getProductById = async (idProducto) => {
-    const result = await ProductDao.getProductById(idProducto);
-    return result
+    return await ProductDao.getProductById(idProducto);
   }
 
-  addProduct = async (product) => {
-    const result = await ProductDao.addProduct(product);
-    return result
+  addProduct = async (datosProducto) => {
+    return await ProductDao.addProduct(datosProducto);
   }
 
-
-  updateProduct = async (idProducto, propertiesToUpdate) => {
-    const result = await ProductDao.updateProduct(idProducto, propertiesToUpdate);
-    return result
+  updateProduct = async (idProducto, nuevosDatosProducto) => {
+    return await ProductDao.updateProduct(idProducto, nuevosDatosProducto);
   }
 
   deleteProduct = async (idProducto) => {
-    const result = await ProductDao.deleteProduct(idProducto);
-    return result
+    return await ProductDao.deleteProduct(idProducto);
   }
 
 }

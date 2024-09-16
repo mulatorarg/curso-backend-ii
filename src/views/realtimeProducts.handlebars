@@ -1,0 +1,96 @@
+<h1>{{ titulo }}</h1>
+<hr>
+
+<div class="row">
+  <div class="col">
+    <h5 class="text-info">Agregar Producto</h5>
+    <form id="formAgregarProducto" class="p-3 border border-info was-validated">
+      <div class="row">
+        <div class="col-8">
+          <label for="producto_nombre">Nombre</label>
+          <input type="text" class="form-control form-control-sm" id="producto_nombre" name="producto_nombre"
+            placeholder="El NOMBRE del producto" required autofocus>
+        </div>
+        <div class="col-4">
+          <label for="producto_categoria">Categoría</label>
+          <input type="text" class="form-control form-control-sm" id="producto_categoria" name="producto_categoria"
+            placeholder="La CATEGORIA del producto" required>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-3">
+          <label for="producto_precio">Precio</label>
+          <input type="number" class="form-control form-control-sm" id="producto_precio" name="producto_precio"
+            placeholder="El PRECIO del producto" required>
+        </div>
+        <div class="col-3">
+          <label for="producto_stock">Stock</label>
+          <input type="number" class="form-control form-control-sm" id="producto_stock" name="producto_stock"
+            placeholder="El STOCK actual del producto" required>
+        </div>
+      </div>
+      <button id="btnAgregarProducto" type="button" class="mt-3 btn btn-sm btn-success">Agregar</button>
+    </form>
+  </div>
+  <div class="col">
+    <h5 class="text-info">Editar Producto</h5>
+    <form id="formEditarProducto" class="p-3 border border-info was-validated">
+      <div class="row">
+        <div class="col-8">
+          <label for="producto_nombre">Nombre</label>
+          <input type="text" class="form-control form-control-sm" id="producto_nombre" name="producto_nombre"
+            placeholder="El NOMBRE del producto" required autofocus>
+        </div>
+        <div class="col-4">
+          <label for="producto_categoria">Categoría</label>
+          <input type="text" class="form-control form-control-sm" id="producto_categoria" name="producto_categoria"
+            placeholder="La CATEGORIA del producto" required>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-3">
+          <label for="producto_precio">Precio</label>
+          <input type="number" class="form-control form-control-sm" id="producto_precio" name="producto_precio"
+            placeholder="El PRECIO del producto" required>
+        </div>
+        <div class="col-3">
+          <label for="producto_stock">Stock</label>
+          <input type="number" class="form-control form-control-sm" id="producto_stock" name="producto_stock"
+            placeholder="El STOCK actual del producto" required>
+        </div>
+        <div class="col-6">
+          <label for="producto_stock">ID</label>
+          <input type="text" disabled class="form-control form-control-sm disabled" id="producto_id" name="producto_id" required>
+          <input type="hidden" id="producto_thumbnail" name="producto_thumbnail" required>
+        </div>
+      </div>
+      <button id="btnEditarProducto" type="button" class="mt-3 btn btn-sm btn-success">Editar</button>
+    </form>
+  </div>
+</div>
+
+<hr>
+
+<div id="lstProductos" class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-2">
+  {{#each productos}}
+  <div id="producto_{{ _id }}" class="col">
+    <div class="card shadow-sm">
+      <img id="producto_{{ _id }}_thumbnail" src="../img/productos/{{ thumbnails.[0] }}" class="card-img-top" alt="{{ nombre }}">
+      <div class="card-body">
+        <p id="producto_{{ _id }}_nombre" class="card-text">{{ nombre }}</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" onclick="editarProducto('{{ _id }}', '{{ nombre }}', '{{ categoria }}', '{{ precio }}', '{{ stock }}', '{{ thumbnail }}')" class="btn btn-sm btn-success">Editar</button>
+            <button type="button" onclick="borrarProducto('{{ _id }}')" class="btn btn-sm btn-danger">Eliminar</button>
+          </div>
+          <small id="producto_{{ _id }}_precio" class="text-body-secondary">$ {{ precio }}</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTimeProducts.js"></script>

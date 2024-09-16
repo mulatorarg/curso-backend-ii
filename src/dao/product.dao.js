@@ -1,12 +1,13 @@
 import ProductoModel from "../models/producto.model.js";
+import { generarClaveAleatoria } from "../util/util.js";
 //import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js'
 
 class ProductoDao {
 
-  async addProduct({ code, nombre, precio, stock, categoria, thumbnails }) {
+  async addProduct({ nombre, precio, stock, categoria, thumbnails }) {
     try {
 
-      if (!code || !nombre || !precio || !stock || !categoria) {
+      if (!nombre || !precio || !stock || !categoria) {
         console.log("Todos los campos son obligatorios.");
         return;
       }
@@ -18,6 +19,8 @@ class ProductoDao {
         return;
       }
 
+      const code = generarClaveAleatoria(10);
+
       const newProduct = new ProductoModel({
         code,
         nombre,
@@ -25,10 +28,10 @@ class ProductoDao {
         stock,
         categoria,
         activo: true,
-        thumbnails: thumbnails || []
+        thumbnails: thumbnails || ['nuevo.jpeg']
       });
 
-      await newProduct.save();
+      return await newProduct.save();
 
     } catch (error) {
       console.log("Error al agregar producto: ", error);
@@ -85,17 +88,11 @@ class ProductoDao {
   //Get product con query, para poder ordenar y filtrar productos.
   getProductsQuery = async (limit, page, sort, categoria) => {
     try {
-      // Si no se proporciona un límite, se establece en 10 por defecto
-      !limit && (limit = 9);
-      // Si no se proporciona una página, se establece en 1 por defecto
+      !limit && (limit = 10);
       !page && (page = 1);
-      // Si el ordenamiento es 'asc', se establece en 1
       sort === 'asc' && (sort = 1);
-      // Si el ordenamiento es 'des', se establece en -1
       sort === 'des' && (sort = -1);
 
-      // Se crea un filtro a partir de la consulta proporcionada, si no hay consulta, el filtro es un objeto vacío.
-      //Ejemplo {"categoria": "una categoria"}
       const filter = categoria ? { categoria: categoria } : {};
       const queryOptions = { limit: limit, page: page, lean: true };
 
@@ -103,9 +100,8 @@ class ProductoDao {
         queryOptions.sort = { price: sort };
       }
 
-      //paginacion con sus propiedades para paginar:
       const getProducts = await ProductoModel.paginate(filter, queryOptions);
-      getProducts.isValid = !(page <= 0 || page > getProducts.totalPages); // verificamos si el número de página proporcionado es válido y dentro del rango de páginas disponibles. Si no lo es, entonces getProducts.isValid se establecerá en falso.
+      getProducts.isValid = !(page <= 0 || page > getProducts.totalPages);
       getProducts.prevLink =
         getProducts.hasPrevPage &&
         `?page=${getProducts.prevPage}&limit=${limit}`;
@@ -126,11 +122,11 @@ class ProductoDao {
       const producto = await ProductoModel.findById(id);
 
       if (!producto) {
-        console.log("Producto no encontrado");
+        //console.log("Producto no encontrado");
         return null;
       }
 
-      console.log("Producto encontrado!");
+      //console.log("Producto encontrado!");
       return producto;
     } catch (error) {
       console.log("Error al traer un producto por id");
@@ -140,33 +136,34 @@ class ProductoDao {
   async updateProduct(id, productoActualizado) {
     try {
 
-      const updateado = await ProductoModel.findByIdAndUpdate(id, productoActualizado);
+      const producto = await ProductoModel.findByIdAndUpdate(id, productoActualizado, {returnDocument: 'after'});
+      console.log(producto);
 
-      if (!updateado) {
-        console.log("Producto no encontrado.");
+      if (!producto) {
+        //console.log("Producto no encontrado.");
         return null;
       }
 
-      console.log("Producto actualizado correctamente.");
-      return updateado;
+      //console.log("Producto actualizado correctamente.");
+      return await producto.save();
     } catch (error) {
-      console.log("Error al actualizar el producto.", error);
-
+      //console.log("Error al actualizar el producto.", error);
+      return null;
     }
   }
 
   async deleteProduct(id) {
     try {
-      const deleteado = await ProductoModel.findByIdAndDelete(id);
+      const producto = await ProductoModel.findByIdAndDelete(id);
 
-      if (!deleteado) {
-        console.log("Producto no encontrado.");
+      if (!producto) {
+        //console.log("Producto no encontrado.");
         return null;
       }
 
-      console.log("Producto eliminado correctamente.");
+      //console.log("Producto eliminado correctamente.");
     } catch (error) {
-      console.log("Error al eliminar el producto.", error);
+      //console.log("Error al eliminar el producto.", error);
       throw error;
     }
   }

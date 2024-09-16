@@ -70,8 +70,15 @@ router.get("/register", (req, res) => {
   res.render("register");
 });
 
-router.get("/realtimeproducts", passport.authenticate("jwt", { session: false }), soloAdmin, (req, res) => {
-  res.render("realtime-products");
+router.get("/realtimeproducts", passport.authenticate("jwt", { session: false }), soloAdmin, async (req, res) => {
+  try {
+    const titulo = "Productos en tiempo real 😏";
+    const productos = await ProductoModel.find({ activo: true }).lean();
+    const categorias = await ProductoModel.distinct("categoria").lean();
+    res.render("realtimeProducts", { productos, categorias, titulo });
+  } catch (error) {
+    res.status(500).send("Error al recuperar Productos para Tiempo Real.")
+  }
 })
 
 export default router;
