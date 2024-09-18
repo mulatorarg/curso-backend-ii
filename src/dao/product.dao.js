@@ -1,6 +1,5 @@
 import ProductoModel from "../models/producto.model.js";
 import { generarClaveAleatoria } from "../util/util.js";
-//import { nanoid } from 'https://cdn.jsdelivr.net/npm/nanoid/nanoid.js'
 
 class ProductoDao {
 

@@ -15,8 +15,8 @@ export const passportCall = (strategy) => {
       }
 
       if (!user) {
-        //return res.redirect("/login");
-        return res.status(401).send({ error: info.message ? info.message : info.toString() });
+        return res.redirect("/login"), {error: 'Debes iniciar sesión para hacer uso de esta páginas especiales.'};
+        //return res.status(401).send({ error: info.message ? info.message : info.toString() });
       }
 
       req.user = user;

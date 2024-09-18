@@ -1,5 +1,6 @@
 import UserService from "../services/user.service.js";
 import jwt from "jsonwebtoken";
+import UserDTO from "../dto/user.dto.js";
 
 class UserController {
 
@@ -28,7 +29,8 @@ class UserController {
     try {
       const user = await UserService.loginUser(email, password);
       const token = jwt.sign({
-        usuario: `${user.first_name} ${user.last_name}`,
+        first_name: `${user.first_name}`,
+        last_name: `${user.last_name}`,
         email: user.email,
         role: user.role
       }, 'coderShopSecreto', { expiresIn: "1h" });
@@ -42,9 +44,10 @@ class UserController {
 
   async current(req, res) {
     if (req.user) {
-      res.render('home', { user: req.user });
+      const userDTO = new UserDTO(req.user);
+      res.render("home", { user: userDTO })
     } else {
-      res.render('home');
+      res.render('/login');
     }
   }
 
@@ -54,6 +57,5 @@ class UserController {
   }
 
 }
-
 
 export default new UserController();

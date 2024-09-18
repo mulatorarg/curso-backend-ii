@@ -1,7 +1,6 @@
 import { Router } from "express";
+import { passportCall } from "../util/util.js";
 import ProductoModel from "../models/producto.model.js";
-import { soloAdmin, soloUser } from "../middleware/auth.js";
-import passport from "passport";
 
 const router = Router();
 
@@ -63,14 +62,22 @@ router.get("/carts/:cid", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  res.render("login");
+  //si tiene token, está logueado
+  if (req.cookies["coderShopToken"]) {
+    res.redirect("/api/sessions/current"); //esta ruta controla si token es correcto...
+  } else {
+    res.render("login");
+  }
 });
 
 router.get("/register", (req, res) => {
   res.render("register");
 });
 
-router.get("/realtimeproducts", passport.authenticate("jwt", { session: false }), soloAdmin, async (req, res) => {
+router.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
+  if (req.user.role !== "admin") {
+    res.render("/login", {error: 'debes iniciar sesión'}); //esta ruta controla si token es correcto...
+  }
   try {
     const titulo = "Productos en tiempo real 😏";
     const productos = await ProductoModel.find({ activo: true }).lean();
@@ -79,6 +86,20 @@ router.get("/realtimeproducts", passport.authenticate("jwt", { session: false })
   } catch (error) {
     res.status(500).send("Error al recuperar Productos para Tiempo Real.")
   }
-})
+});
+
+router.get("/cart", passportCall("jwt"), async (req, res) => {
+  if (req.user.role !== "admin") {
+    res.render("/login"); //esta ruta controla si token es correcto...
+  }
+  try {
+    const titulo = "🛒 Tu Carrito de compras";
+    const categorias = await ProductoModel.distinct("categoria").lean();
+    const productos = s;
+    res.render("cart", { productos, categorias, titulo });
+  } catch (error) {
+    res.status(500).send("Error al recuperar Productos para Tiempo Real.")
+  }
+});
 
 export default router;

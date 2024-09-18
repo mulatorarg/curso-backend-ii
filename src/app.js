@@ -3,7 +3,8 @@ import exphbs from "express-handlebars";
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
-import productRouter from "./routes/product.router.js";
+import productsRouter from "./routes/products.router.js";
+import cartsRouter from "./routes/carts.router.js";
 import sessionRouter from "./routes/session.router.js";
 import shopRouter from "./routes/shop.router.js";
 import { Server } from "socket.io";
@@ -12,8 +13,12 @@ import "./config/database.js";
 
 import { jwtDecode } from "jwt-decode";
 
+import dotenv from 'dotenv';
+dotenv.config();
+
+const PUERTO = process.env.PORT || 8001;
+
 const app = express();
-const PUERTO = 8080;
 
 // Middleware
 app.use(express.json());
@@ -31,7 +36,8 @@ app.set("views", "./src/views");
 
 // Rutas
 app.use("/", shopRouter);
-app.use("/productos", productRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionRouter);
 
 // Iniciamos servidor
@@ -49,9 +55,8 @@ socketServer.on('connection', async (socket) => {
     const cookie = socket.handshake.headers.cookie ?? '';
     const decoded = jwtDecode(cookie);
     const role = decoded.role;
-
     if (role !== 'admin') {
-      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No tienes permisos para actualizar productos.' });
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No tienes permisos para agregar productos.' });
       return;
     }
 
@@ -60,13 +65,13 @@ socketServer.on('connection', async (socket) => {
 
       if (producto) {
         socket.emit('agregarProductoAgregado', producto);
-        //socket.emit('mostrarMsj', { tipo: 'success', mensaje: 'El producto fue cargado correctamente.' });
       } else {
         socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'El producto no fue cargado.' });
       }
 
     } catch (error) {
       console.log(error);
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al crear producto: ' + error });
     }
 
   });
@@ -76,23 +81,36 @@ socketServer.on('connection', async (socket) => {
     const cookie = socket.handshake.headers.cookie ?? '';
     const decoded = jwtDecode(cookie);
     const role = decoded.role;
-
     if (role !== 'admin') {
-      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No tienes permiso para actualizar este producto.' });
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No tienes permiso para actualizar productos.' });
       return;
     }
 
     const productoId = data.id;
     delete data.id;
 
-    const producto = await productService.updateProduct(productoId, data);
+    try {
+      const producto = await productService.updateProduct(productoId, data);
+    } catch (error) {
+      console.log(error);
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Eror al actualizar producto: ' + error });
+    }
 
     socket.emit('editarProductoEditado', producto);
   });
 
   socket.on('borrarProducto', async (productoId) => {
+    // antes de nada, verifico si tiene permisos
+    const cookie = socket.handshake.headers.cookie ?? '';
+    const decoded = jwtDecode(cookie);
+    const role = decoded.role;
+    if (role !== 'admin') {
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'No tienes permiso para borrar productos.' });
+      return;
+    }
+
     const producto = await productService.deleteProduct(productoId);
-    console.log(producto);
+
     socket.emit('borrarProductoBorrado', productoId);
   });
 

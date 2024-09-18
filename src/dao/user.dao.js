@@ -6,7 +6,6 @@ class UserDao {
     return await UsuarioModel.findById(id);
   }
 
-
   async findOne(query) {
     return await UsuarioModel.findOne(query);
   }
