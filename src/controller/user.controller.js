@@ -12,7 +12,7 @@ class UserController {
     const { first_name, last_name, email, age, password } = req.body;
 
     try {
-      const nuevoUsuario = await UserService.registerUser({ first_name, last_name, email, age, password });
+      const user = await UserService.registerUser({ first_name, last_name, email, age, password });
 
       const token = jwt.sign({
         first_name: `${user.first_name}`,

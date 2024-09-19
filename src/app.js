@@ -13,7 +13,6 @@ import productService from "./services/product.service.js";
 import config from "./config/config.js";
 import "./config/database.js";
 
-
 const PORT = config.PORT;
 const VERSION = config.VERSION;
 
