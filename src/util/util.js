@@ -37,7 +37,7 @@ export const authorization = (role) => {
 }
 
 export function generarClaveAleatoria(longitud) {
-  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz0123456789';
+  const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz0123456789.';
   let clave = '';
   for (let i = 0; i < longitud; i++) {
       const indiceAleatorio = Math.floor(Math.random() * caracteres.length);

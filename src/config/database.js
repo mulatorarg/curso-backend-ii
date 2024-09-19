@@ -1,10 +1,7 @@
-import mongoose from "mongoose";
+import config from './config.js';
+import { connect } from 'mongoose';
 
-mongoose.connect("mongodb://localhost:27017/proyecto-backend-ii")
-//mongoose.connect("mongodb+srv://campogabriel:BrY7yMcnp3OUo5Jw@cluster0.2ltylis.mongodb.net/proyecto-backend-ii?retryWrites=true&w=majority&appName=Cluster0")
-  .then(() => {
-    console.log("Conectado a mongo.");
-  })
-  .catch((error) => {
-    console.log("Ups, NO conectado a mongo:\n" + error);
-  });
+const MONGO_URI = config.MONGO_URI;
+await connect(MONGO_URI)
+  .then(() => { console.log("✅ Conectado al Servidor de MongoDB.") })
+  .catch((error) => { console.log("❌ Ups, ocurrió un error intentar conectaro con el Servidor de MongoDB:\n" + error) });

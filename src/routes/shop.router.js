@@ -1,14 +1,17 @@
 import { Router } from "express";
 import { passportCall } from "../util/util.js";
-import ProductoModel from "../models/producto.model.js";
+import ProductModel from "../models/product.model.js";
+import cartController from "../controller/cart.controller.js";
+import CartDao from "../dao/cart.dao.js";
 
 const router = Router();
+const cartDao = new CartDao();
 
 router.get("/", async (req, res) => {
   try {
     const titulo = "Todos nuestros Productos";
-    const productos = await ProductoModel.find({ activo: true }).lean();
-    const categorias = await ProductoModel.distinct("categoria").lean();
+    const productos = await ProductModel.find({ active: true }).lean();
+    const categorias = await ProductModel.distinct("category").lean();
     res.render("store", { productos, categorias, titulo });
   } catch (error) {
     res.status(500).send("Error al recuperar Productos Activos.")
@@ -18,8 +21,8 @@ router.get("/", async (req, res) => {
 router.get("/destacados", async (req, res) => {
   try {
     const titulo = "Productos Destacados";
-    const productos = await ProductoModel.find({ destacado: true, activo: true }).lean();
-    const categorias = await ProductoModel.distinct("categoria").lean();
+    const productos = await ProductModel.find({ important: true, active: true }).lean();
+    const categorias = await ProductModel.distinct("category").lean();
     res.render("store", { productos, categorias, titulo });
   } catch (error) {
     res.status(500).send("Error al recuperar Productos Destacados.")
@@ -28,36 +31,13 @@ router.get("/destacados", async (req, res) => {
 
 router.get("/categorias/:categoria", async (req, res) => {
   try {
-    const categoria = req.params.categoria ?? '';
+    const category = req.params.category ?? '';
     const titulo = "Productos por Categoria";
-    const productos = await ProductoModel.find({ categoria: categoria }).lean();
-    const categorias = await ProductoModel.distinct("categoria").lean();
+    const productos = await ProductModel.find({ active: true, category: category }).lean();
+    const categorias = await ProductModel.distinct("category").lean();
     res.render("store", { productos, categorias, titulo });
   } catch (error) {
     res.status(500).send("Error al recuperar Categorias.")
-  }
-});
-
-router.get("/carts/:cid", async (req, res) => {
-  const cartId = req.params.cid;
-
-  try {
-    const carrito = await cartManager.getCarritoById(cartId);
-
-    if (!carrito) {
-      console.log("No existe ese carrito con el id");
-      return res.status(404).json({ error: "Carrito no encontrado" });
-    }
-
-    const productosEnCarrito = carrito.products.map(item => ({
-      product: item.product.toObject(),
-      quantity: item.quantity
-    }));
-
-    res.render("carts", { productos: productosEnCarrito });
-  } catch (error) {
-    console.error("Error al obtener el carrito", error);
-    res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
@@ -74,14 +54,18 @@ router.get("/register", (req, res) => {
   res.render("register");
 });
 
+router.get("/sinpermisos", (req, res) => {
+  res.render("sinpermisos");
+});
+
 router.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
   if (req.user.role !== "admin") {
-    res.render("/login", {error: 'debes iniciar sesión'}); //esta ruta controla si token es correcto...
+    res.redirect("/sinpermisos");
   }
   try {
     const titulo = "Productos en tiempo real 😏";
-    const productos = await ProductoModel.find({ activo: true }).lean();
-    const categorias = await ProductoModel.distinct("categoria").lean();
+    const productos = await ProductModel.find({ active: true }).lean();
+    const categorias = await ProductModel.distinct("category").lean();
     res.render("realtimeProducts", { productos, categorias, titulo });
   } catch (error) {
     res.status(500).send("Error al recuperar Productos para Tiempo Real.")
@@ -89,17 +73,46 @@ router.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
 });
 
 router.get("/cart", passportCall("jwt"), async (req, res) => {
-  if (req.user.role !== "admin") {
-    res.render("/login"); //esta ruta controla si token es correcto...
-  }
   try {
+
+    if (req.user.role !== "user") res.redirect("/sinpermisos");
+
     const titulo = "🛒 Tu Carrito de compras";
-    const categorias = await ProductoModel.distinct("categoria").lean();
-    const productos = s;
+    const categorias = await ProductModel.distinct("category").lean();
+
+    const carrito_id = req.user.cart;
+    const carrito = await cartDao.getCartById(carrito_id);
+
+    let productos = [];
+    if (carrito) productos = carrito.products;
+
+    console.log(productos);
+
     res.render("cart", { productos, categorias, titulo });
   } catch (error) {
-    res.status(500).send("Error al recuperar Productos para Tiempo Real.")
+    res.status(500).send("Error al recuperar tu carrito: " + error)
   }
 });
+
+router.get("/product/:producto_id", passportCall("jwt"), async (req, res) => {
+  try {
+    if (req.user.role !== "user") res.redirect("/sinpermisos");
+
+    const carrito_id = req.user.cart;
+    if (carrito_id) {
+      const producto_id = req.params.producto_id ?? '';
+      const titulo = "Datos Producto";
+      const producto = await ProductModel.findById(producto_id).lean();
+      const categorias = await ProductModel.distinct("category").lean();
+      res.render("product", { producto, categorias, titulo, carrito_id });
+    } else {
+      res.redirect("/login");
+    }
+  } catch (error) {
+    res.status(500).send("Error al recuperar Producto.")
+  }
+});
+
+router.get("/purchase/:producto_id", passportCall("jwt"), cartController.addProductToCart);
 
 export default router;

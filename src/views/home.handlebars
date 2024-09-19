@@ -1,12 +1,13 @@
-<h1>Hola, {{user.name}}.</h1>
+<h1>🖖 Hola, {{user.first_name}}.</h1>
 
 <div class="text-danger"> {{ error }}</div>
 
 <div class="container mt-5 mb-5">
   <h4>Datos de usuario:</h4>
   <ul class="list-group list-group-flush">
-    <li class="list-group-item"><b>📧 Email:</b> <span id="user-email">{{user.email}}</span></li>
-    <li class="list-group-item"><b>🏷️ Rol:</b> <span id="user-role">{{user.role}}</span></li>
+    <li class="list-group-item"><b>👉 Nombre Completo:</b> {{user.name}}.</li>
+    <li class="list-group-item"><b>📧 Email:</b> {{user.email}}.</li>
+    <li class="list-group-item"><b>🏷️ Rol:</b> {{user.role}}.</li>
   </ul>
 </div>
 

@@ -6,7 +6,7 @@ router.get("/", async (req, res) => {
   try {
     const { limit = 10, page = 1, sort, query } = req.query;
 
-    const productos = await productManager.getProducts({
+    const products = await productManager.getProducts({
       limit: parseInt(limit),
       page: parseInt(page),
       sort,
@@ -15,15 +15,15 @@ router.get("/", async (req, res) => {
 
     res.json({
       status: 'success',
-      payload: productos,
-      totalPages: productos.totalPages,
-      prevPage: productos.prevPage,
-      nextPage: productos.nextPage,
-      page: productos.page,
-      hasPrevPage: productos.hasPrevPage,
-      hasNextPage: productos.hasNextPage,
-      prevLink: productos.hasPrevPage ? `/api/products?limit=${limit}&page=${productos.prevPage}&sort=${sort}&query=${query}` : null,
-      nextLink: productos.hasNextPage ? `/api/products?limit=${limit}&page=${productos.nextPage}&sort=${sort}&query=${query}` : null,
+      payload: products,
+      totalPages: products.totalPages,
+      prevPage: products.prevPage,
+      nextPage: products.nextPage,
+      page: products.page,
+      hasPrevPage: products.hasPrevPage,
+      hasNextPage: products.hasNextPage,
+      prevLink: products.hasPrevPage ? `/api/products?limit=${limit}&page=${products.prevPage}&sort=${sort}&query=${query}` : null,
+      nextLink: products.hasNextPage ? `/api/products?limit=${limit}&page=${products.nextPage}&sort=${sort}&query=${query}` : null,
     });
 
   } catch (error) {
@@ -57,17 +57,17 @@ router.get("/:pid", async (req, res) => {
 
 // Agregar nuevo producto:
 router.post("/", async (req, res) => {
-  const nuevoProducto = req.body;
+  const newProduct = req.body;
 
   try {
-    await productManager.addProduct(nuevoProducto);
+    await productManager.addProduct(newProduct);
     res.status(201).json({
-      message: "Producto agregado exitosamente"
+      message: "Producto agregado exitosamente."
     });
   } catch (error) {
     console.error("Error al agregar producto", error);
     res.status(500).json({
-      error: "Error interno del servidor"
+      error: "Error interno del servidor."
     });
   }
 });
@@ -80,12 +80,12 @@ router.put("/:pid", async (req, res) => {
   try {
     await productManager.updateProduct(id, productoActualizado);
     res.json({
-      message: "Producto actualizado exitosamente"
+      message: "Producto actualizado exitosamente."
     });
   } catch (error) {
-    console.error("Error al actualizar producto", error);
+    console.error("Error al actualizar producto.", error);
     res.status(500).json({
-      error: "Error interno del servidor"
+      error: "Error interno del servidor."
     });
   }
 });

@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
-  fecha: { type: Date, default: Date.now },
-  productos: [
+  date: { type: Date, default: Date.now },
+  products: [
     {
-      producto: {
+      product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "productos",
+        ref: "products",
         required: true
       },
-      cantidad: {
+      quantity: {
         type: Number,
         required: true,
         default: 0
       },
-      precio: {
+      price: {
         type: Number,
         required: true,
         default: 0

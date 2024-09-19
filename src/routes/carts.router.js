@@ -7,8 +7,8 @@ const router = Router();
 // Creamos un nuevo carrito:
 router.post("/", async (req, res) => {
   try {
-    const nuevoCarrito = await CartDao.crearCarrito();
-    res.json(nuevoCarrito);
+    const newCart = await CartDao.crearCarrito();
+    res.json(newCart);
   } catch (error) {
     console.error("Error al crear un nuevo carrito", error);
     res.status(500).json({ error: "Error interno del servidor" });
@@ -24,13 +24,14 @@ router.get("/:cid", async (req, res) => {
 
     if (!carrito) {
       console.log("No existe ese carrito con el id");
-      return res.status(404).json({ error: "Carrito no encontrado" });
+      return res.status(404).json({ error: "Carrito no encontrado." });
     }
 
+    // retorar solo los productos del carrito
     return res.json(carrito.productos);
   } catch (error) {
-    console.error("Error al obtener el carrito", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    console.error("Error al obtener el carrito.");
+    res.status(500).json({ error: "Error interno del servidor." });
   }
 });
 

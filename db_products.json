@@ -1,0 +1,142 @@
+[
+  {
+    "code": "7112233445566",
+    "name": "Zapatilla Puma Ferrari Informal Roja",
+    "price": 42000,
+    "category": "ZAPATILLAS INFORMALES",
+    "important": true,
+    "active": true,
+    "stock": 10,
+    "thumbnails": ["zapatilla-puma-ferrari-informal-roja.jpeg"]
+  },
+  {
+    "code": "7321564878951",
+    "name": "Zapatilla Puma Ferrari Roja",
+    "price": 36000,
+    "category": "ZAPATILLAS DEPORTIVAS",
+    "important": false,
+    "active": true,
+    "stock": 13,
+    "thumbnails": ["zapatilla-puma-ferrari-roja.jpeg"]
+  },
+  {
+    "code": "7623134652312",
+    "name": "Zapatilla Puma Ferrari Rosa",
+    "price": 32000,
+    "category": "ZAPATILLAS DEPORTIVAS",
+    "important": false,
+    "active": true,
+    "stock": 14,
+    "thumbnails": ["zapatilla-puma-ferrari-rosa.jpeg"]
+  },
+  {
+    "code": "7321654678643",
+    "name": "Mochila I-RUN Azul",
+    "price": 21000,
+    "category": "MOCHILAS",
+    "important": true,
+    "active": true,
+    "stock": 12,
+    "thumbnails": ["mochila-irun-azul.jpeg"]
+  },
+  {
+    "code": "7123456451234",
+    "name": "Mochila I-RUN Negra",
+    "price": 22000,
+    "category": "MOCHILAS",
+    "important": true,
+    "active": true,
+    "stock": 4,
+    "thumbnails": ["mochila-irun-negra.jpeg"]
+  },
+  {
+    "code": "7123145646748",
+    "name": "Zapatillas I-Run Modelo 6905",
+    "price": 24000,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-6905.jpeg"]
+  },
+  {
+    "code": "7678451231456",
+    "name": "Zapatillas I-Run Modelo 6933",
+    "price": 23000,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-6933.jpeg"]
+  },
+  {
+    "code": "7654612312345",
+    "name": "Zapatillas I-Run Modelo 6977",
+    "price": 24000,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-6977.jpeg"]
+  },
+  {
+    "code": "7564213456123",
+    "name": "Zapatillas I-Run Modelo 7004",
+    "price": 23400,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7004.jpeg"]
+  },
+  {
+    "code": "7923123456123",
+    "name": "Zapatillas I-Run Modelo 7031",
+    "price": 23800,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7031.jpeg"]
+  },
+  {
+    "code": "7912312312454",
+    "name": "Zapatillas I-Run Modelo 7032",
+    "price": 22650,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7032.jpeg"]
+  },
+  {
+    "code": "7231234561231",
+    "name": "Zapatillas I-Run Modelo 7058",
+    "price": 24500,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7058.jpeg"]
+  },
+  {
+    "code": "7123456123123",
+    "name": "Zapatillas I-Run Modelo 7075",
+    "price": 24600,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7075.jpeg"]
+  },
+  {
+    "code": "7931364215784",
+    "name": "Zapatillas I-Run Modelo 7121",
+    "price": 24100,
+    "category": "ZAPATILLAS RUNNING",
+    "important": true,
+    "active": true,
+    "stock": 6,
+    "thumbnails": ["zapatilla-irun-7121.jpeg"]
+  }
+]

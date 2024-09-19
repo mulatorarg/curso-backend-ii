@@ -7,16 +7,15 @@ import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import sessionRouter from "./routes/session.router.js";
 import shopRouter from "./routes/shop.router.js";
+import { jwtDecode } from "jwt-decode";
 import { Server } from "socket.io";
 import productService from "./services/product.service.js";
+import config from "./config/config.js";
 import "./config/database.js";
 
-import { jwtDecode } from "jwt-decode";
 
-import dotenv from 'dotenv';
-dotenv.config();
-
-const PUERTO = process.env.PORT || 8001;
+const PORT = config.PORT;
+const VERSION = config.VERSION;
 
 const app = express();
 
@@ -35,14 +34,15 @@ app.set("view engine", "handlebars");
 app.set("views", "./src/views");
 
 // Rutas
-app.use("/", shopRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionRouter);
+app.use("/", shopRouter); // VISTAS
 
 // Iniciamos servidor
-const httpServer = app.listen(PUERTO, () => {
-  console.log(`Escuchando en el puerto ${PUERTO}.`);
+const httpServer = app.listen(PORT, () => {
+  console.log(`✅ Servidor Listo. Escuchando en el puerto ${PORT}.`);
+  console.log(`✅ Versión: ${VERSION}. Backend II - Comisión 69995. Campo Gabriel.`);
 });
 
 const socketServer = new Server(httpServer);
@@ -60,6 +60,8 @@ socketServer.on('connection', async (socket) => {
       return;
     }
 
+    console.log('agregarProducto', data);
+
     try {
       const producto = await productService.addProduct(data);
 
@@ -70,7 +72,7 @@ socketServer.on('connection', async (socket) => {
       }
 
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al crear producto: ' + error });
     }
 
@@ -86,17 +88,19 @@ socketServer.on('connection', async (socket) => {
       return;
     }
 
+    console.log('editarProducto', data);
+
     const productoId = data.id;
     delete data.id;
 
     try {
       const producto = await productService.updateProduct(productoId, data);
+      socket.emit('editarProductoEditado', producto);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
       socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Eror al actualizar producto: ' + error });
     }
 
-    socket.emit('editarProductoEditado', producto);
   });
 
   socket.on('borrarProducto', async (productoId) => {

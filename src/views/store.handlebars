@@ -6,13 +6,13 @@
     <div class="card shadow-sm">
       <img src="../img/productos/{{ thumbnails.[0] }}" class="card-img-top" alt="...">
       <div class="card-body">
-        <p class="card-text">{{ nombre }} <br> {{ descripcion }}</p>
+        <p class="card-text">{{ name }}</p>
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group">
-            <button type="button" class="btn btn-sm btn-info">Ver</button>
-            <button type="button" class="btn btn-sm btn-success">Comprar</button>
+            <a href="/product/{{ _id }}" class="btn btn-sm btn-info">Ver</a>
+            <a href="/purchase/{{ _id }}" class="btn btn-sm btn-success">Comprar</a>
           </div>
-          <small class="text-body-secondary">$ {{ precio }}</small>
+          <small class="text-body-secondary">$ {{ price }}</small>
         </div>
       </div>
     </div>
