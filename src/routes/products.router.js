@@ -27,7 +27,7 @@ router.get("/", async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error al obtener productos", error);
+    console.log("Error al obtener productos:", error.message);
     res.status(500).json({
       status: 'error',
       error: "Error interno del servidor"
@@ -48,7 +48,7 @@ router.get("/:pid", async (req, res) => {
     }
     res.json(producto);
   } catch (error) {
-    console.error("Error al obtener producto", error);
+    console.log("Error al obtener producto", error.message);
     res.status(500).json({
       error: "Error interno del servidor"
     });
@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
       message: "Producto agregado exitosamente."
     });
   } catch (error) {
-    console.error("Error al agregar producto", error);
+    console.log("Error al agregar producto", error.message);
     res.status(500).json({
       error: "Error interno del servidor."
     });
@@ -83,7 +83,7 @@ router.put("/:pid", async (req, res) => {
       message: "Producto actualizado exitosamente."
     });
   } catch (error) {
-    console.error("Error al actualizar producto.", error);
+    console.log("Error al actualizar producto.", error.message);
     res.status(500).json({
       error: "Error interno del servidor."
     });
@@ -100,7 +100,7 @@ router.delete("/:pid", async (req, res) => {
       message: "Producto eliminado exitosamente"
     });
   } catch (error) {
-    console.error("Error al eliminar producto", error);
+    console.log("Error al eliminar producto", error.message);
     res.status(500).json({
       error: "Error interno del servidor"
     });

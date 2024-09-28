@@ -1,6 +1,6 @@
 import 'dotenv/config';
 
-const DEFAULT_VERSION = '0.0.1-test';
+const DEFAULT_VERSION = '0.0.0-dev';
 const DEFAULT_PORT = 8100;
 const DEFAULT_MONGO_URI = 'mongodb://localhost:27017/proyecto-backend-ii';
 const DEFAULT_COOKIE_NAME = 'coderShopToken';

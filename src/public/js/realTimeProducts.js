@@ -15,6 +15,7 @@ function editarProducto(id, name, category, price, stock, thumbnail) {
   formEditarProducto.product_price.value = price;
   formEditarProducto.product_stock.value = stock;
   formEditarProducto.product_thumbnail.value = thumbnail;
+  formEditarProducto.product_name.focus();
 }
 
 function borrarProducto(id) {
@@ -103,14 +104,17 @@ socket.on('agregarProductoAgregado', (product) => {
 socket.on('editarProductoEditado', (product) => {
   mostrarMsj('success', `Se ha editado el product: ${product.name}.`);
 
-  const elementoname = document.getElementById(`product_${product._id}_name`);
-  if (elementoname) elementoname.innerHTML = product.name;
+  const elementoName = document.getElementById(`product_${product._id}_name`);
+  if (elementoName) elementoName.innerHTML = product.name;
 
-  const elementocategory = document.getElementById(`product_${product._id}_category`);
-  if (elementocategory) elementocategory.innerHTML = product.category;
+
+  const elementoCategory = document.getElementById(`product_${product._id}_category`);
+  if (elementoCategory) elementoCategory.innerHTML = product.category;
 
   const elementoPrecio = document.getElementById(`product_${product._id}_price`);
   if (elementoPrecio) elementoPrecio.innerHTML = `$ ${product.price}`;
+
+  if (elementoName) elementoName.focus();
 });
 
 socket.on('borrarProductoBorrado', (product) => {

@@ -2,11 +2,11 @@ import { Router } from "express";
 import { passportCall } from "../util/util.js";
 import ProductModel from "../models/product.model.js";
 import cartController from "../controller/cart.controller.js";
-import CartDao from "../dao/cart.dao.js";
+import config from "../config/config.js";
 
 const router = Router();
-const cartDao = new CartDao();
 
+/** Renderizar vista de todos los productos */
 router.get("/", async (req, res) => {
   try {
     const titulo = "Todos nuestros Productos";
@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+/** Renderizar vista de los productos destacados */
 router.get("/destacados", async (req, res) => {
   try {
     const titulo = "Productos Destacados";
@@ -29,7 +30,8 @@ router.get("/destacados", async (req, res) => {
   }
 });
 
-router.get("/categorias/:categoria", async (req, res) => {
+/** Renderizar vista de los productos según categoría */
+router.get("/categorias/:category", async (req, res) => {
   try {
     const category = req.params.category ?? '';
     const titulo = "Productos por Categoria";
@@ -41,26 +43,32 @@ router.get("/categorias/:categoria", async (req, res) => {
   }
 });
 
+/** Renderizar vista de inicio de sesión */
 router.get("/login", (req, res) => {
   //si tiene token, está logueado
-  if (req.cookies["coderShopToken"]) {
+  if (req.cookies[config.COOKIE_NAME]) {
     res.redirect("/api/sessions/current"); //esta ruta controla si token es correcto...
   } else {
     res.render("login");
   }
 });
 
+/** Renderizar vista de regsitro de usuario */
 router.get("/register", (req, res) => {
   res.render("register");
 });
 
+/** Renderizar vista de información de que el usuario no tiene los permisos para acceder al recurso */
 router.get("/sinpermisos", (req, res) => {
   res.render("sinpermisos");
 });
 
+/** Renderizar vista de ABM en tiempo real (uso de websockets) */
 router.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
   if (req.user.role !== "admin") {
     res.redirect("/sinpermisos");
+      console.log('RealtimeProducts: Sin Permisos.');
+      return;
   }
   try {
     const titulo = "Productos en tiempo real 😏";
@@ -72,47 +80,13 @@ router.get("/realtimeproducts", passportCall("jwt"), async (req, res) => {
   }
 });
 
-router.get("/cart", passportCall("jwt"), async (req, res) => {
-  try {
+/** Renderizar vista del carrito actual del usuario */
+router.get("/cart", passportCall("jwt"), cartController.showCart);
 
-    if (req.user.role !== "user") res.redirect("/sinpermisos");
+/** Renderizar vista de datos del producto seleccionado */
+router.get("/product/:producto_id", passportCall("jwt"), cartController.showProduct);
 
-    const titulo = "🛒 Tu Carrito de compras";
-    const categorias = await ProductModel.distinct("category").lean();
-
-    const carrito_id = req.user.cart;
-    const carrito = await cartDao.getCartById(carrito_id);
-
-    let productos = [];
-    if (carrito) productos = carrito.products;
-
-    console.log(productos);
-
-    res.render("cart", { productos, categorias, titulo });
-  } catch (error) {
-    res.status(500).send("Error al recuperar tu carrito: " + error)
-  }
-});
-
-router.get("/product/:producto_id", passportCall("jwt"), async (req, res) => {
-  try {
-    if (req.user.role !== "user") res.redirect("/sinpermisos");
-
-    const carrito_id = req.user.cart;
-    if (carrito_id) {
-      const producto_id = req.params.producto_id ?? '';
-      const titulo = "Datos Producto";
-      const producto = await ProductModel.findById(producto_id).lean();
-      const categorias = await ProductModel.distinct("category").lean();
-      res.render("product", { producto, categorias, titulo, carrito_id });
-    } else {
-      res.redirect("/login");
-    }
-  } catch (error) {
-    res.status(500).send("Error al recuperar Producto.")
-  }
-});
-
+/** Renderizar vista de compra de producto seleccionado */
 router.get("/purchase/:producto_id", passportCall("jwt"), cartController.addProductToCart);
 
 export default router;
