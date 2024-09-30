@@ -59,8 +59,6 @@ socketServer.on('connection', async (socket) => {
       return;
     }
 
-    console.log('agregarProducto', data);
-
     try {
       const producto = await productService.addProduct(data);
 
@@ -69,10 +67,9 @@ socketServer.on('connection', async (socket) => {
       } else {
         socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'El producto no fue cargado.' });
       }
-
     } catch (error) {
       //console.log(error);
-      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al crear producto: ' + error });
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Error al crear producto: ' + error.mensaje });
     }
 
   });
@@ -87,8 +84,6 @@ socketServer.on('connection', async (socket) => {
       return;
     }
 
-    console.log('editarProducto', data);
-
     const productoId = data.id;
     delete data.id;
 
@@ -97,7 +92,7 @@ socketServer.on('connection', async (socket) => {
       socket.emit('editarProductoEditado', producto);
     } catch (error) {
       //console.log(error);
-      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Eror al actualizar producto: ' + error });
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Eror al actualizar producto: ' + error.mensaje });
     }
 
   });
@@ -112,9 +107,14 @@ socketServer.on('connection', async (socket) => {
       return;
     }
 
-    const producto = await productService.deleteProduct(productoId);
+    try {
+      const producto = await productService.deleteProduct(productoId);
 
-    socket.emit('borrarProductoBorrado', productoId);
+      socket.emit('borrarProductoBorrado', productoId);
+    } catch (error) {
+      //console.log(error);
+      socket.emit('mostrarMsj', { tipo: 'error', mensaje: 'Eror al borrar producto: ' + error.mensaje });
+    }
   });
 
 });
