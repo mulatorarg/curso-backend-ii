@@ -43,7 +43,6 @@ function mostrarMsj(tipo = 'success', texto = 'Genial!') {
 }
 
 btnAgregarProducto.addEventListener('click', (e) => {
-
   if (formAgregarProducto.product_name.value.length == 0) return;
   if (formAgregarProducto.product_category.value.length == 0) return;
   if (formAgregarProducto.product_price.value.length == 0) return;
@@ -60,7 +59,6 @@ btnAgregarProducto.addEventListener('click', (e) => {
 });
 
 btnEditarProducto.addEventListener('click', (e) => {
-
   if (formEditarProducto.product_id.value.length == 0) return;
   if (formEditarProducto.product_name.value.length == 0) return;
   if (formEditarProducto.product_category.value.length == 0) return;

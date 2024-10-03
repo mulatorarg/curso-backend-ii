@@ -75,6 +75,30 @@ class CartController {
       res.status(500).send("Error al agregar el Producto a tu carrito." + error)
     }
   }
+
+  async finishCart(req, res) {
+    try {
+      if (req.user.role !== "user") {
+        console.log('addProductToCart', 'Sin permiso');
+        res.redirect("/sinpermisos");
+        return;
+      }
+
+      const carrito_id = req.user.cart;
+      if (carrito_id) {
+        const producto_id = req.params.producto_id;
+
+        cartDao.addProductToCart(carrito_id, producto_id, 1);
+
+        res.redirect("/cart");
+      } else {
+        res.redirect("/login")
+      }
+    } catch (error) {
+      res.status(500).send("Error al agregar el Producto a tu carrito." + error)
+    }
+  }
+
 }
 
 export default new CartController();
