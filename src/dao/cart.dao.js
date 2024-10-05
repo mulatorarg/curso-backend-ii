@@ -1,4 +1,5 @@
 import CartModel from "../models/cart.model.js";
+import ProductModel from "../models/product.model.js";
 
 class CartDao {
 
@@ -6,7 +7,7 @@ class CartDao {
     try {
       const newCart = new CartModel({ products: [] });
       await newCart.save();
-      return newCart;
+      return newCart.lean();
     } catch (error) {
       console.log("Error al crear el nuevo carrito.");
       return null;
@@ -32,18 +33,18 @@ class CartDao {
   async addProductToCart(cartId, productId, quantity = 1) {
     try {
       const cart = await this.getCartById(cartId);
-      const existeProducto = cart.products.find(item => item.product.toString() === productId);
+      const productToAdd = await ProductModel.findOne({ _id: productId });
+      const productIndex = cart.products.findIndex(item => item.product._id.toString() == productId);
 
-      if (existeProducto) {
-        existeProducto.quantity += quantity;
+      if (productIndex !== -1) {
+        cart.products[productIndex].quantity += quantity;
+        cart.products[productIndex].price = productToAdd.price;
       } else {
-        cart.products.push({ product: productId, quantity });
+        cart.products.push({ product: productToAdd, quantity, price: productToAdd.price });
       }
 
-      cart.markModified("products");
-
       await cart.save();
-      return cart;
+
     } catch (error) {
       console.log("Error al agregar un producto", error);
       return null;

@@ -1,4 +1,6 @@
 import CartDao from "../dao/cart.dao.js";
+import CartModel from "../models/cart.model.js";
+import ProductModel from "../models/product.model.js";
 
 const cartDao = new CartDao();
 
@@ -16,12 +18,10 @@ class CartController {
       const categorias = await ProductModel.distinct("category").lean();
 
       const carrito_id = req.user.cart;
-      const carrito = await cartDao.getCartById(carrito_id);
+      const carrito = await CartModel.findById(carrito_id).lean();
 
       let productos = [];
       if (carrito) productos = carrito.products;
-
-      console.log(productos);
 
       res.render("cart", { productos, categorias, titulo });
     } catch (error) {
@@ -65,7 +65,7 @@ class CartController {
       if (carrito_id) {
         const producto_id = req.params.producto_id;
 
-        cartDao.addProductToCart(carrito_id, producto_id, 1);
+        await cartDao.addProductToCart(carrito_id, producto_id, 1);
 
         res.redirect("/cart");
       } else {

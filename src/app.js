@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import productsRouter from "./routes/products.router.js";
 import cartsRouter from "./routes/carts.router.js";
 import sessionRouter from "./routes/session.router.js";
-import shopRouter from "./routes/shop.router.js";
+import viewsRouter from "./routes/views.router.js";
 import { jwtDecode } from "jwt-decode";
 import { Server } from "socket.io";
 import productService from "./services/product.service.js";
@@ -36,7 +36,7 @@ app.set("views", "./src/views");
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRouter);
 app.use("/api/sessions", sessionRouter);
-app.use("/", shopRouter); // VISTAS
+app.use("/", viewsRouter); // VISTAS
 
 // Iniciamos servidor
 const httpServer = app.listen(PORT, () => {

@@ -1,8 +1,15 @@
 <h1>{{ titulo }}</h1>
 
+<hr />
+
 {{#each productos}}
-  <div>
-    <p>Producto: {{name}}</p>
-    <p>Cantidad: {{quantity}}</p>
+<div class="d-flex mt-2">
+  <div class="flex-shrink-0">
+    <img height="64" class="align-self-start  mr-3" src="../img/productos/{{ product.thumbnails.[0] }}" alt="Foto de {{product.name}}.">
   </div>
+  <div class="flex-grow-1 ms-3">
+    <h5 class="mt-0">{{product.name}}</h5>
+    <p>{{quantity}} unidades a $ {{price}} cada una.</p>
+  </div>
+</div>
 {{/each}}
