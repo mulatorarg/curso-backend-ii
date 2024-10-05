@@ -1,6 +1,10 @@
 import { Router } from "express";
 import CartModel from "../models/cart.model.js";
 import CartDao from "../dao/cart.dao.js";
+import ProductModel from "../models/product.model.js";
+import UserModel from "../models/user.model.js";
+import TicketModel from "../models/ticket.model.js";
+import { calcularTotal, generarClaveAleatoria } from "../util/util.js";
 
 const router = Router();
 
@@ -53,12 +57,55 @@ router.post("/:cid/product/:pid", async (req, res) => {
 // realizar la compra.
 router.post("/:cid/purchase", async (req, res) => {
   const cartId = req.params.cid;
-  try {
 
-  } catch (error) {
-    console.error("Error al completar la compra.", error.message);
-    res.status(500).json({ error: "Error interno del servidor" });
-  }
+  //try {
+    const cart = await CartModel.findById(cartId);
+    const products = cart.products;
+    const productsNoStock = [];
+
+    products.forEach(async (item) => {
+      const productId = item.product;
+      const product = await ProductModel.findById(productId);
+      if(product.stock >= item.quantity) {
+        product.stock -= item.quantity;
+        await product.save();
+      } else {
+        productsNoStock.push(productId);
+      }
+    });
+
+    cart.products = cart.products.filter(
+      item => productsNoStock.some(
+        productoId => productoId.equals(item.product)
+      )
+    );
+    await cart.save();
+
+    const cartUser = await UserModel.findOne({cart_id: cartId});
+    const ticket = new TicketModel({
+      code: 'TICKET-' + generarClaveAleatoria(),
+      purchase_datetime: new Date(),
+      amount: calcularTotal(cart.products),
+      purchaser: cartUser.email,
+    });
+
+    await ticket.save();
+
+    res.status(200).json({
+      message: 'Compra generada correctamente.',
+      ticket: {
+        id: ticket._id,
+        code: ticket.code,
+        amount: ticket.amount,
+        purchaser: ticket.purchaser
+      },
+      productsNoStock,
+    });
+
+  //} catch (error) {
+  //  console.error("Error al completar la compra.", error.message);
+  //  res.status(500).json({ error: "Error interno del servidor" });
+  //}
 });
 
 export default router;

@@ -36,7 +36,7 @@ export const authorization = (role) => {
   }
 }
 
-export function generarClaveAleatoria(longitud) {
+export function generarClaveAleatoria(longitud = 10) {
   const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-abcdefghijklmnopqrstuvwxyz0123456789.';
   let clave = '';
   for (let i = 0; i < longitud; i++) {
@@ -44,4 +44,15 @@ export function generarClaveAleatoria(longitud) {
       clave += caracteres[indiceAleatorio];
   }
   return clave;
+}
+
+
+export function calcularTotal(products) {
+  let total = 0;
+
+  products.forEach(item => {
+    total += item.produt.price * item.quantity;
+  });
+
+  return total;
 }
