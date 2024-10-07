@@ -1,0 +1,25 @@
+<h1>{{ titulo }}</h1>
+
+<hr />
+
+<p>Ticket: {{code}}</p>
+
+<hr>
+
+Productos sin stock:
+{{#each productsNoStock}}
+<div class="d-flex mt-2">
+  <div class="flex-shrink-0">
+    <img height="64" class="align-self-start  mr-3" src="../img/productos/{{ product.thumbnails.[0] }}"
+      alt="Foto de {{product.name}}.">
+  </div>
+  <div class="flex-grow-1 ms-3">
+    <h5 class="mt-0">{{product.name}}</h5>
+    <p>{{quantity}} unidades a $ {{price}} cada una.</p>
+  </div>
+</div>
+{{/each}}
+
+<div class="mt-2">
+  <a class="btn btn-sm btn-success" href="/">Volver al inicio</a>
+</div>

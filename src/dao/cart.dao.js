@@ -7,7 +7,7 @@ class CartDao {
     try {
       const newCart = new CartModel({ products: [] });
       await newCart.save();
-      return newCart.lean();
+      return newCart;
     } catch (error) {
       console.log("Error al crear el nuevo carrito.");
       return null;

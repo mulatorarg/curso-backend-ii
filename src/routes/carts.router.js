@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//  Listar productos que pertenecen a determinado carrito.
+// Listar productos que pertenecen a determinado carrito.
 router.get("/:cid", async (req, res) => {
   const cartId = req.params.cid;
 
@@ -58,7 +58,7 @@ router.post("/:cid/product/:pid", async (req, res) => {
 router.post("/:cid/purchase", async (req, res) => {
   const cartId = req.params.cid;
 
-  //try {
+  try {
     const cart = await CartModel.findById(cartId);
     const products = cart.products;
     const productsNoStock = [];
@@ -102,10 +102,10 @@ router.post("/:cid/purchase", async (req, res) => {
       productsNoStock,
     });
 
-  //} catch (error) {
-  //  console.error("Error al completar la compra.", error.message);
-  //  res.status(500).json({ error: "Error interno del servidor" });
-  //}
+  } catch (error) {
+    console.error("Error al completar la compra.", error.message);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
 });
 
 export default router;
